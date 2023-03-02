@@ -22,6 +22,19 @@ public class Account {
         lastTransaction = LocalDateTime.now();
     }
     
+    public Account(double balance, Client owner, LocalDateTime lastTransaction) {
+        this.balance = balance;
+        this.owner = owner;
+        this.lastTransaction = lastTransaction;
+    }
+    
+    public Account(Client owner) {
+        balance = 0;
+        this.owner = owner;
+        lastTransaction = LocalDateTime.now();
+    }
+            
+    
     public void addFunds(double fundsToAdd)
     {
         balance = balance + fundsToAdd;
@@ -51,6 +64,16 @@ public class Account {
 
     public void setOwner(Client owner) {
         this.owner = owner;
+    }
+    
+    public void setOwner(String firstName, String lastName) {
+        
+        int a = 10;
+        int b = a;
+        
+        
+        Client temp = new Client(firstName, lastName);
+        this.owner = temp;
     }
 
     public LocalDateTime getLastTransaction() {

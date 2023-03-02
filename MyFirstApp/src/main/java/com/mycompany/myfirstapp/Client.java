@@ -21,6 +21,22 @@ public class Client {
         lastName = "";
         clientSince = LocalDateTime.now();
     }
+    
+    public Client(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        clientSince = LocalDateTime.now();
+    }
+    
+    public Client copyClient()
+    {
+        Client copy = new Client();
+        copy.setFirstName(this.firstName);
+        copy.setLastName(this.lastName);
+        copy.clientSince = this.clientSince;
+        
+        return copy;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -44,5 +60,16 @@ public class Client {
 
     public void setClientSince(LocalDateTime clientSince) {
         this.clientSince = clientSince;
+    }
+    
+    public boolean equals(Client obj) {
+        if(!this.firstName.equals(obj.firstName))
+            return false;
+        if(!this.lastName.equals(obj.lastName))
+            return false;
+        if(!this.clientSince.equals(obj.clientSince))
+            return false;
+        
+        return true;
     }
 }
