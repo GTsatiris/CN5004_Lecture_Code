@@ -17,7 +17,7 @@ public class MyFirstApp {
                 
         tsatirisAccount.setOwner(tsatiris);
         
-        tsatirisAccount.getOwner().toString();
+        //tsatirisAccount.getOwner().toString();
         
         tsatirisAccount.addFunds(100);
         tsatirisAccount.setBalance(2314);
