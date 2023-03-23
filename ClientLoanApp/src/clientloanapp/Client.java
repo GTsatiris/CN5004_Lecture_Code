@@ -75,4 +75,22 @@ public class Client {
         
         return score;
     }
+    
+    //Utility method provided by the Client class
+    public static float riskAssessment(Client client) {
+        float initialScore = client.getClientScore();
+        
+        //Machine Learning MOCK
+        Random rand = new Random();
+        float finalScore = rand.nextFloat() + initialScore;
+        
+        if(finalScore > 1.0f)
+        	finalScore = 1.0f;
+        
+        if(finalScore < 0.0f)
+        	finalScore = 0.0f;
+        
+        return finalScore;
+    }
+
 }

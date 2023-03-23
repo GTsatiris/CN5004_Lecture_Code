@@ -45,7 +45,7 @@ public class BusinessClient extends Client{
     }
     
     @Override
-    public float getClientScore()
+    public float getClientScore() //hides parent class getClientScore functionality
     {
         return 100;
     }

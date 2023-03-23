@@ -45,7 +45,7 @@ public class IndivClient extends Client {
     }
     
     @Override
-    public float getClientScore() {
+    public float getClientScore() { //calls super.getClientScore, effectively EXTENDING its functionality
         float score = super.getClientScore();
         
         if(this.isEmployed)

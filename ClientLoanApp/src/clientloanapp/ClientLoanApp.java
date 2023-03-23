@@ -5,71 +5,44 @@
 package clientloanapp;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
  * @author student
  */
 public class ClientLoanApp {
-
+	
+	static ArrayList<Client> ALL_CLIENTS;
+	
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Client George = new Client();
-        IndivClient Skoulikaritis = new IndivClient(); 
         
-        George.getAddress();
-        Skoulikaritis.getAddress();
-        
-        riskAssessment(George);
-        riskAssessment(Skoulikaritis);
-        
-        long a = 10;
-        int b = (int)a;
-    }
-    
-    public static float riskAssessment(Client client) {
-        float initialScore = client.getClientScore();
-        return 0.0f;
-    }
-    
-    public static ArrayList<Client> getClientsFromService(){
-        //TODO crazy REST API mumbo jumbo
-        ArrayList<Client> clients = new ArrayList<Client>();
-        
-        for(int i = 0; i < 100; i++)
-        {
-            Client temp;
-            if(i % 2 == 0)
-            {
-                temp = new IndivClient();
-            }
-            else
-            {
-                temp = new BusinessClient();
-            }
-            
-            clients.add(temp);
-        }
-        
-        return clients;
-    }
-            
-    public static Client GetClient(ArrayList<Client> clients, String clientName) throws Exception
-    {
-        Client result = null;
-        for(int i = 0; i < clients.size(); i++)
-        {
-            if(clients.get(i).getName().equals(clientName))
-                result = clients.get(i);
-        }
-        
-        if(result == null)
-        {
-            throw new Exception("Client not found");
-        }
-        
-        return result;
+    	//Read all clients from DB
+    	try {
+        	ALL_CLIENTS = DataHandler.getClientsFromService();
+    	}
+    	catch(Exception e) {
+    		System.out.println("ERROR WHEN GETTING DATA: " + e.getMessage());
+    		System.out.println("Please try again ...");
+    		return;
+    	}
+    	
+    	//Search for and get a Client named "George"
+    	Client queryResult = DataHandler.GetClient(ALL_CLIENTS, "George");
+    	if(queryResult == null)
+    	{
+    		System.out.println("Client not found!! Please try again...");
+    		return;
+    	}
+    	
+    	float score = Client.riskAssessment(queryResult);
+    	System.out.println("Client's credit score is: " + score);
+    	if(score > 0.7)
+    		System.out.println("SUGGESTION: Client is eligible for a loan!");
+    	else
+    		System.out.println("SUGGESTION: Client is NOT eligible for a loan!");
     }
 }
