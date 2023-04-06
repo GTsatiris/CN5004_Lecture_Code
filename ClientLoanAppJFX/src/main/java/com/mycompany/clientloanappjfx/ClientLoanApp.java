@@ -12,37 +12,46 @@ import java.util.Random;
  * @author student
  */
 public class ClientLoanApp {
-	
-	static ArrayList<Client> ALL_CLIENTS;
-	
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String[] args) {
-//        
-//    	//Read all clients from DB
-//    	try {
-//        	ALL_CLIENTS = DataHandler.getClientsFromService();
-//    	}
-//    	catch(Exception e) {
-//    		System.out.println("ERROR WHEN GETTING DATA: " + e.getMessage());
-//    		System.out.println("Please try again ...");
-//    		return;
-//    	}
-//    	
-//    	//Search for and get a Client named "George"
-//    	Client queryResult = DataHandler.GetClient(ALL_CLIENTS, "George");
-//    	if(queryResult == null)
-//    	{
-//    		System.out.println("Client not found!! Please try again...");
-//    		return;
-//    	}
-//    	
-//    	float score = Client.riskAssessment(queryResult);
-//    	System.out.println("Client's credit score is: " + score);
-//    	if(score > 0.7)
-//    		System.out.println("SUGGESTION: Client is eligible for a loan!");
+    
+    static ArrayList<Client> ALL_CLIENTS;
+    
+    public static void InitApplication()
+    {
+        try {
+            ALL_CLIENTS = DataHandler.getClientsFromService();
+    	}
+    	catch(Exception e) {
+            System.out.println("ERROR WHEN GETTING DATA: " + e.getMessage());
+            System.out.println("Please try again ...");
+            return;
+    	}
+    }
+    
+    public static Client getClient(String clientName) throws Exception
+    {
+        if(ALL_CLIENTS != null)
+        {
+            Client queryResult = DataHandler.GetClient(ALL_CLIENTS, clientName);
+            if(queryResult == null)
+            {
+                    throw new Exception("Client not found!!\nPlease try again...");
+            }
+            return queryResult;
+        }
+        else
+        {
+            throw new Exception("Could not retrieve client list!!\nPlease try again...");
+        }
+    }
+    
+    public static boolean giveLoan(Client client, float threshold)
+    {
+        float score = Client.riskAssessment(client);
+    	System.out.println("Client's credit score is: " + score);
+//    	if(score > threshold)
+//            return true;
 //    	else
-//    		System.out.println("SUGGESTION: Client is NOT eligible for a loan!");
-//    }
+//            return false;
+        return score > threshold;
+    }
 }

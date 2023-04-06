@@ -1,5 +1,6 @@
 package com.mycompany.clientloanappjfx;
 
+//MAVEN CREATED THIS, WE CAN DELETE IT...
 public class SystemInfo {
 
     public static String javaVersion() {
