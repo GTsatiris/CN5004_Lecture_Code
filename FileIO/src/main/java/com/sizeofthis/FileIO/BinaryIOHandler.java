@@ -52,6 +52,38 @@ public class BinaryIOHandler {
         
         return myClients;
     }
+    
+    public static ArrayList<ClientV2> readClientsFromFileV2(String filePath) {
+        ArrayList<ClientV2> myClients = new ArrayList<ClientV2>();
+        
+        try (
+                FileInputStream fileInput = new FileInputStream(filePath);
+                DataInputStream fileStream = new DataInputStream(fileInput);
+            )
+        {
+            boolean endOfFile = false;
+            while(!endOfFile)
+            {
+                try
+                {
+                    String name = fileStream.readUTF();
+                    String address = fileStream.readUTF();
+                    double monthly_income = fileStream.readDouble();
+                    myClients.add(new ClientV2(name, address, monthly_income));
+                }
+                catch (EOFException e)
+                {
+                    endOfFile = true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("ERROR: Cannot find client file!");
+        } catch (IOException e) {
+            System.out.println("ERROR: There was a problem reading from file!");
+        }
+        
+        return myClients;
+    }
 
     public static void storeClientsInFile(ArrayList<Client> clientList, String filePath) {
         try (
@@ -64,6 +96,23 @@ public class BinaryIOHandler {
                 fileWriter.writeUTF(cl.getName());
                 fileWriter.writeUTF(cl.getAddress());
                 fileWriter.writeUTF(cl.getMonthly_income());
+            }
+        } catch (IOException e) {
+            System.out.println("ERROR: There was a problem writing to file!");
+        }
+    }
+    
+    public static void storeClientsInFileV2(ArrayList<ClientV2> clientList, String filePath) {
+        try (
+                FileOutputStream fileOutput = new FileOutputStream(filePath);
+                DataOutputStream fileWriter = new DataOutputStream(fileOutput);
+            ) 
+        {
+            for(ClientV2 cl : clientList)
+            {
+                fileWriter.writeUTF(cl.getName());
+                fileWriter.writeUTF(cl.getAddress());
+                fileWriter.writeDouble(cl.getMonthly_income());
             }
         } catch (IOException e) {
             System.out.println("ERROR: There was a problem writing to file!");

@@ -14,7 +14,11 @@ public class MyFileIOTest {
 
     public static void main(String[] args) {
         //TextFileExample();
-        BinaryFileExample();
+        //BinaryFileExample();
+        //CreateAndStoreToBinaryV2();
+        //BinaryFileExampleV2();
+        //CreateAndStoreObjects();
+        ObjectFileExample();
     }
 
     public static void TextFileExample ()
@@ -59,6 +63,54 @@ public class MyFileIOTest {
         BinaryIOHandler.storeClientsInFile(clientList, "data/save/clients.bin");
     }
     
+    public static void CreateAndStoreToBinaryV2() {
+        ArrayList<ClientV2> clientList = new ArrayList<ClientV2>();
+        
+        for(int i = 0; i < 3; i++)
+        {
+            String name = TextIOHandler.handleConsoleInput();
+            String address = TextIOHandler.handleConsoleInput();
+            double income;
+            try
+            {
+                income = Double.parseDouble(TextIOHandler.handleConsoleInput());
+            }
+            catch(Exception e) //In case the user does not input a proper number
+            {
+                System.out.println("Invalid input!");
+                income = 0.0;
+            }
+            ClientV2 temp = new ClientV2(name, address, income);
+            clientList.add(temp);
+        }
+        
+        BinaryIOHandler.storeClientsInFileV2(clientList, "data/save/clientsV2.bin");
+    }
+    
+    public static void CreateAndStoreObjects() {
+        ArrayList<ClientV2> clientList = new ArrayList<ClientV2>();
+        
+        for(int i = 0; i < 3; i++)
+        {
+            String name = TextIOHandler.handleConsoleInput();
+            String address = TextIOHandler.handleConsoleInput();
+            double income;
+            try
+            {
+                income = Double.parseDouble(TextIOHandler.handleConsoleInput());
+            }
+            catch(Exception e) //In case the user does not input a proper number
+            {
+                System.out.println("Invalid input!");
+                income = 0.0;
+            }
+            ClientV2 temp = new ClientV2(name, address, income);
+            clientList.add(temp);
+        }
+        
+        ObjectIOHandler.storeClientsInFileV2(clientList, "data/save/clientObjects.dat");
+    }
+    
     public static void BinaryFileExample()
     {
         ArrayList<Client> clientList = BinaryIOHandler.readClientsFromFile("data/save/clients.bin");
@@ -76,5 +128,43 @@ public class MyFileIOTest {
         //TODO change clients in list
         
         BinaryIOHandler.storeClientsInFile(clientList, "data/save/clients.bin");
+    }
+    
+    public static void BinaryFileExampleV2()
+    {
+        ArrayList<ClientV2> clientList = BinaryIOHandler.readClientsFromFileV2("data/save/clientsV2.bin");
+        
+        int i = 1;
+        for (ClientV2 cl : clientList) {
+            System.out.println("Client " + i);
+            System.out.println("- Name: " + cl.getName());
+            System.out.println("- Address: " + cl.getAddress());
+            System.out.println("- Monthly Income: " + cl.getMonthly_income());
+            System.out.println("------------------");
+            i++;
+        }
+        
+        //TODO change clients in list
+        
+        BinaryIOHandler.storeClientsInFileV2(clientList, "data/save/clientsV2.bin");
+    }
+    
+    public static void ObjectFileExample()
+    {
+        ArrayList<ClientV2> clientList = ObjectIOHandler.readClientsFromFileV2("data/save/clientObjects.dat");
+        
+        int i = 1;
+        for (ClientV2 cl : clientList) {
+            System.out.println("Client " + i);
+            System.out.println("- Name: " + cl.getName());
+            System.out.println("- Address: " + cl.getAddress());
+            System.out.println("- Monthly Income: " + cl.getMonthly_income());
+            System.out.println("------------------");
+            i++;
+        }
+        
+        //TODO change clients in list
+        
+        ObjectIOHandler.storeClientsInFileV2(clientList, "data/save/clientObjects.dat");
     }
 }
